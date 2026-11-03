@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Categories</title>
+     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<h2>Categories</h2>
+
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$conn = mysqli_connect("127.0.0.1", "root", "", "restaurant", 3307);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+/* ✅ NO ORDER BY (default order only) */
+$result = mysqli_query($conn, "SELECT * FROM categories");
+
+echo "<table>
+<thead>
+<tr>
+<th>Category ID</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>";
+
+while ($row = mysqli_fetch_assoc($result)) {
+    echo "<tr>
+    <td>{$row['category_id']}</td>
+    <td>{$row['name']}</td>
+    </tr>";
+}
+
+echo "</tbody></table>";
+
+mysqli_close($conn);
+?>
+
+<style>
+        body {
+            background: linear-gradient(135deg, #F3E5F5, #E1BEE7);
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            padding: 40px;
+        }
+
+        h2 {
+            font-size: 40px;
+            color: #4A148C;
+            margin-bottom: 30px;
+            animation: fadeDown 0.8s ease;
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        table {
+    border-collapse: collapse;
+    margin: auto;
+    width: 85%;              
+    font-size: 19px;         
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border-radius: 12px;
+    overflow: hidden;
+    animation: fadeUp 0.8s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+     }
+
+        table:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        }
+
+        th, td {
+            padding: 25px 30px;
+        }
+
+        th {
+            background: linear-gradient(45deg, #8E44AD, #6A1B9A);
+            color: white;
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        tbody tr {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        /* Staggered animation */
+        tbody tr:nth-child(1) { animation-delay: 0.1s; }
+        tbody tr:nth-child(2) { animation-delay: 0.2s; }
+        tbody tr:nth-child(3) { animation-delay: 0.3s; }
+        tbody tr:nth-child(4) { animation-delay: 0.4s; }
+        tbody tr:nth-child(5) { animation-delay: 0.5s; }
+
+        tbody tr:nth-child(odd) {
+            background-color: #F3E5F5;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #FFFFFF;
+        }
+
+        tbody tr:hover {
+            background-color: #D1C4E9;
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+
+        .no-data {
+            margin-top: 30px;
+            font-size: 20px;
+            color: #4A148C;
+            font-weight: bold;
+            animation: fadeUp 0.8s ease;
+        }
+    </style>
+
+
+</body>
+</html>
